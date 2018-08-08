@@ -3,12 +3,12 @@
         <div class="top_nav_box">
             <div class="top_nav">
                 <ul class="nav_left">
-                    <li v-for='i in navArr' :key='i.id' @mouseover="i.show = false" @mouseout="i.show = true" :class='i.id<=(navArr.length-1)?"active":""'>
-                        <i v-if='!i.childShow'></i>
+                    <li v-for='i in navArr' :key='i.id' @mouseover="i.show = true" @mouseout="i.show = false" :class='i.id<=(navArr.length-1)?"active":""'>
+                        <i v-show='!i.childShow'></i>
                         <a :href='i.href' :class='i.claName'>{{i.content}}</a>
-                        <span v-if='i.childShow'></span>
+                        <span v-show='i.childShow'></span>
                         <transition name='fade' enter-active-class='animated fadeInDown'>
-                            <ul v-if='!i.show' :class='i.claName'  @mouseover="i.show = true">
+                            <ul v-show='i.show' :class='i.claName'>
                                 <li v-for='k in i.son' :key='k.id'>
                                     <a :href="k.href">{{k.content}}</a>
                                 </li>
@@ -35,11 +35,61 @@
                 </div>
                 <div class="bom_box_center">
                     <div class="search_box">
-
+                        <ul class='search_slid'>
+                            <li><a href="#">宝贝</a><span></span></li>
+                            <li><a href="#">店铺</a></li>
+                        </ul>
+                        <input type="text" class='search_txt search' placeholder="请输入您要搜索的商品关键字"/>
+                        <input type="submit" class='search_btn search' value='搜索'/>
                     </div>
+                    <ul class="search_nav">
+                        <li v-for='k in searchArr' :key='k.id'><a href="">{{k.content}}</a></li>
+                    </ul>
                 </div>
                 <div class="bom_box_right">
+                    <div class="my_shop _my">
+                        <div class="ctn">
+                            <span></span>
+                            <a href="#">我的商城</a>
+                            <i></i>
+                        </div>
+                        <div class='content'>
+                            <div class="my_box">
+                                <img src="../../assets/denglu.png" alt=""/>
+                                <a v-show='!myLogin' href="#">您好，请登录</a>
+                                <ul v-show='myLogin' class='my_zt'>
+                                    <li><span>{{myLoginObj.name}}</span><i>注册会员</i></li>
+                                    <li>上次登录：{{myLoginObj.time}}</li>
+                                </ul>
+                            </div>
+                            <ul v-for='i in myNavArr' :class='i.className'>
+                                <li v-for='k in i.txt'>
+                                    <a href="#">{{k.content}}</a>
+                                </li> 
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="goshop _my">
+                        <div class="ctn">
+                            <span></span>
+                            <a href="#">购物车结算</a>
+                            <i></i>
+                        </div>
+                        <div class="content">
+                            <div class="title">最新加入的商品</div>
+                            <div v-show='!myShop' class='none_data'>您的购物车中暂无数据，赶快选择心爱的商品吧！</div>
+                            <div v-show='myShop' class='data'>
+                                <ul class='myShopList'>
+                                    <li v-for='key in myShopLis' :key='key.num'>
+                                        <img :src="key.url" alt=""/>
+                                    </li>
+                                </ul>
+                                <div class="jiesuan">
 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -57,7 +107,7 @@ export default {
                     claName:'_box',
                     href:'',
                     childShow:true,
-                    show:true,
+                    show:false,
                     son:[
                         {id:11,content:'待付款订单',href:'#'},
                         {id:12,content:'待确认收货',href:'#'},
@@ -69,7 +119,7 @@ export default {
                     claName:'_box',
                     href:'',
                     childShow:true,
-                    show:true,
+                    show:false,
                     son:[
                         {id:21,content:'商品收藏',href:'#'},
                         {id:22,content:'店铺收藏',href:'#'}
@@ -80,7 +130,7 @@ export default {
                     claName:'_box',
                     href:'',
                     childShow:true,
-                    show:true,
+                    show:false,
                     son:[
                         {id:31,content:'购物指南',href:'#'},
                         {id:32,content:'售后服务',href:'#'},
@@ -91,7 +141,7 @@ export default {
                     content:'成为供应商',
                     claName:'gys',
                     href:'',
-                    show:false,
+                    show:true,
                     childShow:false,
                 }
             ],
@@ -103,7 +153,45 @@ export default {
                 {id:1,content:'所有商品分类',className:'category',href:'#'},
                 {id:2,content:'首页',className:'index',href:'#'},
                 {id:3,content:'TV直播',className:'live',href:'#'},
+            ],
+            searchArr:[
+                {id:1,content:'中宁头茬红枸杞'},
+                {id:2,content:'攀枝花凯特芒'},
+                {id:3,content:'海阳网纹瓜'},
+                {id:4,content:'绿壳土鸡蛋'},
+                {id:5,content:'方太'},
+                {id:6,content:'李宁'},
+                {id:7,content:'GUCCI'},
+                {id:8,content:'韩后'}
+            ],
+            myNavArr:[
+                {
+                    id:1,className:'my_nav',txt:[
+                                                    {id:11,content:'站内消息'},
+                                                    {id:12,content:'我的订单'},
+                                                    {id:13,content:'咨询回复'}
+                                                ]
+                },{
+                    id:2,className:'my_nav',txt:[
+                                                    {id:24,content:'我的收藏'},
+                                                    {id:25,content:'我的足迹'},
+                                                    {id:26,content:'我的积分'}
+                                                ]
+                } 
+            ],
+            myLogin:false, //代表未有用户登录
+            myLoginObj:{name:'某某某',time:"2018-08-08 15:12:28"},//当有用户登陆时，更改此条数据即可
+            myShop:!false,//代表用户购物车中没有商品
+            myShopLis:[ //用户购物车中的商品明细
+                {name:'农品堂营养黄金藜麦健康组 货号122867',price:'¥298.00',num:1,url:""},
+                {name:'农品堂营养黄金藜麦健康组 货号122867',price:'¥298.00',num:2,url:""}
             ]
+        }
+    },
+    mounted(){
+        for(var k in this.myShopLis){
+            console.log(k);
+            this.myShopLis[k].url = require('../../assets/list/011/003.jpg');
         }
     },
     methods:{
@@ -131,6 +219,7 @@ export default {
                 float:right;
                 >li{
                     float: left;
+                    z-index: 20;
                     line-height:39px;
                     color:#777777;
                 }
@@ -158,6 +247,7 @@ export default {
                     >ul._box{
                         left:-1px;
                         top:37px;
+                        display: none;
                         position: absolute;
                         background:#fff;
                         >li{
@@ -189,10 +279,11 @@ export default {
                     >ul{
                         color:#76756f;
                         border:1px solid #d9d7d3;
+                        display: block;
                         border-top:0;
                         background:#fff;
                         animation-duration: 0.3s;       //动画执行时间
-                        animation-delay: 0s;            //动画延迟执行时间
+                        animation-delay: 0;            //动画延迟执行时间
                         animation-iteration-count: 1;   //动画执行次数
                         >li:hover{
                             background:#f8f7f6;
@@ -300,19 +391,260 @@ export default {
             >.bom_box_center{
                 width:550px;
                 height:100%;
-                background:#ccc;
                 .search_box{
-                    width:100%;
-                    height:40px;
+                    width:546px;
+                    height:36px;
                     float:left;
                     margin-top:24px;
-                    background:#0f0;
+                    border:2px solid #f15c18;
+                    .search{
+                        float:left;
+                        height:36px;
+                    }
+                    input{
+                        border:none;
+                    }
+                    .search_slid{
+                        float: left;
+                        width:68px;
+                        height:36px;
+                        line-height: 36px;
+                        background:#f8f8f8;
+                        li{
+                            width:68px;
+                            height:36px;
+                            background:#f8f8f8;
+                            position: relative;
+                            border-right:1px solid #cecece;   
+                            a{
+                                padding-left:15px;
+                            }
+                            span{
+                                width:7px;
+                                height:4px;
+                                top:16px;
+                                left:48px;
+                                transform:rotateZ(0deg);
+                                transition: 0.3s;
+                                background:url('../../assets/top_bg.png')-20px 0px ;
+                                position: absolute;
+                            }
+                        }
+                        li:hover{
+                            a{
+                                color:#f15c18;
+                            }
+                            span{
+                                transform:rotateZ(180deg);
+                                transition: 0.3s;
+                            }
+                        }
+                        li:last-child{
+                            width:67px;
+                            height:36px;
+                            display: none;
+                            border-left:1px solid #cecece;   
+                            border-bottom:1px solid #cecece;   
+                        }
+                    }
+                    .search_slid:hover{
+                        li:last-child{
+                            display: block;
+                        }
+                    } 
+                    .search_txt{
+                        width:365px;
+                        height:36px;
+                        color:#a4a4a4;
+                        background:#fff;
+                        padding-left:14px;
+                    }
+                    .search_btn{
+                        width:99px;
+                        height:36px;
+                        color:#fff;
+                        font-weight: 700;
+                        background:#f15c18;
+                    }
+                }
+                .search_nav{
+                    width:550px;
+                    height:33px;
+                    float: left;
+                    li{
+                        float:left;
+                        height:33px;
+                        line-height:33px;
+                        a{
+                            color:#999;
+                            padding:0 9px;
+                            border-left:1px solid #999;
+                        }
+                    }
+                    li:first-child{
+                        a{
+                             padding:0 9px 0 0;
+                            border:none;    
+                        }
+                    }
                 }
             }
             >.bom_box_right{
                 width:295px;
                 height:100%;
-                background:#ff5b57;
+                background:#fff;
+                ._my{
+                    float:left;
+                    height:42px;
+                    margin-top:24px;
+                    line-height:16px;
+                    position: relative;
+                    .ctn{
+                        width:100%;
+                        height:30px;
+                        float: left;
+                        z-index: 11;
+                        position: relative;
+                        background:#fff;
+                        padding-top:12px;
+                        border:1px solid #f0f0f0;
+                        span{
+                            float: left;
+                            width:18px;
+                            height:16px;
+                            margin:0 9px 0 12px;
+                        }
+                        a{
+                            float: left;
+                        }
+                        i{
+                            float: left;
+                            width:4px;
+                            height:7px;
+                            margin:4px 0 0 9px;
+                            background:url('../../assets/top_bg.png') -150px 0; 
+                        }
+                    }
+                    .content{
+                        float:left;
+                        top:43px;
+                        right:-2px;
+                        display: none;
+                        background:#fff;
+                        position: absolute;
+                    }
+                }
+                ._my:hover{
+                    .ctn{
+                        z-index: 11;
+                        position: relative;
+                        height:31px;
+                        border-bottom:1px solid #fff;
+                    }
+                    .content{
+                        z-index:10;
+                        display: block;
+                    }
+                }
+                .my_shop{
+                    width:113px;
+                    margin: 24px 11px 0 42px;
+                    background:#fff;
+                    .ctn{
+                        span{
+                            background:url('../../assets/yangguang.png') -7px -6px;
+                        }
+                    }
+                    .content{
+                        width:270px;
+                        height:157px;
+                        border:1px solid #f1f0ee;
+                        .my_box{
+                            width:100%;
+                            height:68px;
+                            background:#fff;
+                            border-bottom:1px dashed #ebeae7;
+                            img{
+                                float: left;
+                                width:48px;
+                                height:48px;
+                                border-radius:50%;
+                                margin:10px 22px 10px 10px;
+                            }
+                            a{
+                                float:left;
+                                width:92px;
+                                height:28px;
+                                margin-top:20px;
+                                text-align: center;
+                                line-height:28px;
+                                border-radius:4px;
+                                background:#fff;
+                                border:1px solid #f1f0ee;
+                            }
+                            .my_zt{
+                                float:left;
+                                margin-top:15px;
+                                span{
+                                    font-weight: 600;
+                                    color:#000;
+                                    display: inline-block;
+                                    padding-right:8px;
+                                }
+                                i{
+                                    display: inline-block;
+                                    background:#ff4d04;
+                                    border-radius:3px;
+                                }
+                            }
+                            a:hover{
+                                background:#f1f0ee;
+                            }
+                        }
+                        .my_nav{
+                            float:left;
+                            li{
+                                padding:8px 58px 0 10px;
+                            }
+                            a{
+                                color:#000;
+                            }
+                        }
+                    }
+                }
+                .goshop{
+                    width:125px;
+                    background:#fff;
+                    .content{
+                        display: block;
+                        width:350px;
+                        min-height:103px;
+                        background:#fff;
+                        border:1px solid #f0f0f0;
+                        .title{
+                            width:342px;
+                            height:43px;
+                            line-height:43px;
+                            padding-left:8px;
+                            font-weight: 600;
+                            color:#000;
+                            font-size:12px;
+                            border-bottom:1px solid #f0f0f0;
+                        }
+                        .none_data{
+                            width:100%;
+                            height:59px;
+                            text-align: center;
+                            line-height:59px;
+                            color:#666560;
+                        }
+                    }
+                    .ctn{
+                        span{
+                            background:url('../../assets/yangguang.png') -32px -6px;
+                        }
+                    }
+                }
             }
         }
     }
