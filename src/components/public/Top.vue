@@ -80,12 +80,20 @@
                             <div v-show='!myShop' class='none_data'>您的购物车中暂无数据，赶快选择心爱的商品吧！</div>
                             <div v-show='myShop' class='data'>
                                 <ul class='myShopList'>
-                                    <li v-for='key in myShopLis' :key='key.num'>
-                                        <img :src="key.url" alt=""/>
+                                    <li v-for='key in myShopLis' :key='key.nub'>
+                                        <a href='#' class="left">
+                                            <img :src="key.url" alt=""/>
+                                            <p>{{key.name}}</p>
+                                        </a>
+                                        <div class="right">
+                                            <div class='price'>{{key.price}}×{{key.nub }}</div>
+                                            <a href="javascript:;">删除</a>
+                                        </div>
                                     </li>
                                 </ul>
                                 <div class="jiesuan">
-
+                                    <p>共 <span> {{myShopLis.length}} </span> 中商品 总计金额：<i>¥{{shopListNum}}</i></p>
+                                    <a href="#">结算购物车中的商品</a>
                                 </div>
                             </div>
                         </div>
@@ -181,21 +189,37 @@ export default {
             ],
             myLogin:false, //代表未有用户登录
             myLoginObj:{name:'某某某',time:"2018-08-08 15:12:28"},//当有用户登陆时，更改此条数据即可
-            myShop:!false,//代表用户购物车中没有商品
-            myShopLis:[ //用户购物车中的商品明细
-                {name:'农品堂营养黄金藜麦健康组 货号122867',price:'¥298.00',num:1,url:""},
-                {name:'农品堂营养黄金藜麦健康组 货号122867',price:'¥298.00',num:2,url:""}
+            myShop:false,//代表用户购物车中没有商品
+            myShopLis:[ //用户购物车中的商品明细  现在是测试数据，之后要把这个数组清空，动态添加用户的真实数据
+                {name:'农品堂营养黄金藜麦健康组 货号122867',price:'¥298.00',nub:1,url:""},
+                {name:'农品堂营养黄金藜麦健康组 货号122867',price:'¥298.00',nub:2,url:""}
             ]
         }
     },
-    mounted(){
-        for(var k in this.myShopLis){
-            console.log(k);
-            this.myShopLis[k].url = require('../../assets/list/011/003.jpg');
+    computed:{
+        shopListNum(){//用来统计用户所有商品的总价格
+            var num = 0;
+            for(var i in this.myShopLis){
+                num += this.myShopLis[i].price.split('¥')[1]*this.myShopLis[i].nub;
+            }
+            return num.toFixed(2);
         }
     },
+    mounted(){
+        this.getImgUrl();
+        this.getUserName();
+    },
     methods:{
-
+        getImgUrl(){//图片在myShopLis里写路径，图片不能正确添加，引入此方法解决,
+            for(var k in this.myShopLis){ 
+                this.myShopLis[k].url = require('../../assets/list/011/0'+(k+1)+'.jpg');
+            }
+        },
+        getUserName(){//用来获取登陆用户的用户名
+            if(this.myLogin){//有用户登陆
+                this.logginArr[0].content = this.myLoginObj.name;
+            }
+        }
     }
 }    
 </script>
@@ -558,6 +582,7 @@ export default {
                     .content{
                         width:270px;
                         height:157px;
+                        display: none;
                         border:1px solid #f1f0ee;
                         .my_box{
                             width:100%;
@@ -616,7 +641,7 @@ export default {
                     width:125px;
                     background:#fff;
                     .content{
-                        display: block;
+                        display: none;
                         width:350px;
                         min-height:103px;
                         background:#fff;
@@ -637,6 +662,83 @@ export default {
                             text-align: center;
                             line-height:59px;
                             color:#666560;
+                        }
+                        .data{
+                            width:100%;
+                            .myShopList{
+                                width:100%;
+                                li{
+                                    width:100%;
+                                    height:66px;
+                                    border-bottom:1px dashed #e0dedb;
+                                    .left{
+                                        float:left;
+                                        height:66px;
+                                        width:243px;
+                                        background:#fff;
+                                        img{
+                                            width:43px;
+                                            height:43px;
+                                            float:left;
+                                            padding:3px;
+                                            margin:7px 7px 0 15px;
+                                            background:#fff;
+                                            border:1px solid #e0dedb;
+                                        }
+                                        p{
+                                            color:#000;
+                                            float:left;
+                                            width:170px;
+                                            margin-top:7px;
+                                        }
+                                    }
+                                    .right{
+                                        width:97px;
+                                        height:59px;
+                                        float:right;
+                                        padding:7px 10px 0 0;
+                                        text-align: right;
+                                        .price{
+                                            color:#76756f;
+                                        }
+                                        a{
+                                            color:#005f9e;
+                                        }
+                                    }
+                                }
+                            }
+                            .jiesuan{
+                                width:100%;
+                                height:71px;
+                                background:#f1f0ee;
+                                p{
+                                    width:340px;
+                                    height:21px;
+                                    text-align: right;
+                                    padding-top:13px;
+                                    color:#666560;
+                                    span{
+                                        color:#ff4300;
+                                        font-weight:600;
+                                    }
+                                    i{
+                                        font-size:14px;
+                                        color:#ff4300;
+                                        font-weight:600;
+                                    }
+                                }
+                                a{
+                                    float: right;
+                                    width:124px;
+                                    height:28px;
+                                    margin-right:10px;
+                                    border-radius:3px;
+                                    text-align: center;
+                                    line-height:28px;
+                                    color:#fff;
+                                    background:#ff4300;
+                                }
+                            }
                         }
                     }
                     .ctn{
