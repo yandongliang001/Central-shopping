@@ -28,7 +28,7 @@
                 <div class="bom_box_left">
                     <img src="https://pic1.cnrmall.com/image/df/e5/dfe5c0db500c119e8d570142f184ee2d.png" alt="央广购物官方网站" title="央广购物官方网站"/>
                     <ul class='bolt_nav'>
-                        <li v-for='i in bomBoxArr' :class='i.className'>
+                        <li v-for='i in bomBoxArr' :class='i.className' :key='i.id'>
                             <a :href="i.href">{{i.content}}</a>
                         </li>
                     </ul>
@@ -62,8 +62,8 @@
                                     <li>上次登录：{{myLoginObj.time}}</li>
                                 </ul>
                             </div>
-                            <ul v-for='i in myNavArr' :class='i.className'>
-                                <li v-for='k in i.txt'>
+                            <ul v-for='i in myNavArr' :class='i.className' :key='i.id'>
+                                <li v-for='k in i.txt' :key='k.id'>
                                     <a href="#">{{k.content}}</a>
                                 </li> 
                             </ul>
@@ -623,7 +623,7 @@ export default {
                                 }
                             }
                             a:hover{
-                                background:#f1f0ee;
+                                background:#cac8c5;
                             }
                         }
                         .my_nav{
@@ -633,6 +633,11 @@ export default {
                             }
                             a{
                                 color:#000;
+                            }
+                            li:hover{
+                                a{
+                                    color:#ff4d04;
+                                }
                             }
                         }
                     }
