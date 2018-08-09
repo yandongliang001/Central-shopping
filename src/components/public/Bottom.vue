@@ -42,7 +42,7 @@ export default {
                 {id:2,content:'京ICP备10038858号',href:'javascript:;'},
                 {id:3,content:'食品流通许可证编号：SP1101151210063489',href:'javascript:;'},
                 {id:4,content:'信息网络传播视听节目许可证 0102002号',href:'javascript:;'},
-                {id:5,content:'营业执照',href:''},
+                {id:5,content:'营业执照',href:''}
             ],
             englishArr:[
                 {id:1,content:'Copyright©2010-2017 cnrmall.com All Rights Reserved',href:'javascript:;'},
