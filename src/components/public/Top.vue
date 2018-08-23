@@ -26,7 +26,7 @@
         <div class="bottom_box">
             <div class="bottom_auto">
                 <div class="bom_box_left">
-                    <img src="https://pic1.cnrmall.com/image/df/e5/dfe5c0db500c119e8d570142f184ee2d.png" alt="央广购物官方网站" title="央广购物官方网站"/>
+                    <img src="https://pic2.cnrmall.com/image/df/e5/dfe5c0db500c119e8d570142f184ee2d.png" alt="央广购物官方网站" title="央广购物官方网站"/>
                     <ul class='bolt_nav'>
                         <li v-for='i in bomBoxArr' :class='i.className' :key='i.id'>
                             <a :href="i.href">{{i.content}}</a>
@@ -373,6 +373,8 @@ export default {
                 height:100%;
                 >img{
                     float:left;
+                    width:240px;
+                    height:68px;
                     padding:25px 0 16px 7px;
                 }
                 >.bolt_nav{
