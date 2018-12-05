@@ -169,7 +169,6 @@ export default {
                         font-family:'宋体'; 
                     }
                     li{
-                        width:241px;
                         overflow: hidden;
                         margin-top:8px;
                         text-overflow: ellipsis;
