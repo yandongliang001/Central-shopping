@@ -1,8 +1,8 @@
 <template>
     <div>
-        <!-- <Top></Top> -->
+        <Top></Top>
         <Qtzz></Qtzz>   
-        <!-- <Bottom></Bottom> -->
+        <Bottom></Bottom>
     </div>
 </template>
 <script>

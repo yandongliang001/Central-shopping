@@ -70,13 +70,7 @@ export default {
         }
     },
     methods:{
-        ceilImg(id){
-            if(id === 1){
-                alert('第一个li');
-            }else if(id===2){
-                alert('第二个li');
-            }
-        }
+       
     }
 } 
 </script>
